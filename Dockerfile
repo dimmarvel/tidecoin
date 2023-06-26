@@ -1,3 +1,6 @@
+FROM gcc:latest as build
+FROM ubuntu:18.04
+
 RUN apt-get update && \
     apt-get install \
     build-essential \
