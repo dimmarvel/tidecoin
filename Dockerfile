@@ -1,8 +1,9 @@
-FROM gcc:latest as build
 FROM ubuntu:18.04
 
-RUN apt-get update && \
-    apt-get install \
+LABEL taidinfo="github.com/dimmarvel"
+
+RUN apt-get update
+RUN apt-get install -y \
     build-essential \
     libtool \
     autotools-dev \
@@ -23,3 +24,8 @@ RUN apt-get update && \
     qttools5-dev-tools \
     qtwayland5 \
     libqrencode-dev
+
+RUN mkdir -p /usr/src/tide
+WORKDIR /usr/src/tide
+
+COPY . /usr/src/tide
