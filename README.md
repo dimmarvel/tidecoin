@@ -76,3 +76,41 @@ Translations are periodically pulled from Transifex and merged into the git repo
 
 **Important**: We do not accept translation changes as GitHub pull requests because the next
 pull from Transifex would automatically overwrite them again.
+
+----
+## Docker build
+``` 
+//Build image
+docker build -t ubuntu:18.04 . 
+docker images
+
+BASH_OUT:  
+REPOSITORY   TAG       IMAGE ID       CREATED          SIZE
+ubuntu       18.04     2d2b676b5a2c   21 minutes ago   971MB
+
+//Run image
+docker run -d -p 9090:80 --name tidecloud -t -i ubuntu:18.04 /bin/bash
+docker ps
+
+BASH_OUT:
+CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS                                   NAMES
+13beecf6e2ed   ubuntu:18.04   "/bin/bash"   4 minutes ago   Up 3 minutes   0.0.0.0:9090->80/tcp, :::9090->80/tcp   tidecloud
+
+//Enter in image
+docker exec -it tidecloud bash
+
+BASH_OUT:
+root@13beecf6e2ed:/usr/src/tide#
+
+```
+
+### Flags Help:
+1. `run -t` allocate a pseudo-tty
+2. `-i` keep STDIN open even if not attached
+3. `-d` flag is for running the container in detached mode
+4. `-p` flag for the port number, the format is local-port:container-port
+5. `build -t` is for tagging the image.
+
+### Commands Help:
+
+1. ` docker rm $(docker ps -a -f status=exited -f status=created -q) ` remove exited containers, just clear  `docker ps -a`
